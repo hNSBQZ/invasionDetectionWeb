@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>房屋入侵检测系统</title>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lightly-HTML-Project</title>
+    <link type="text/css" rel="stylesheet" href="static/css/style3.css"/>
+
+
+</head>
+
+<body background="static/image/background.gif">
+<h1 align="center">欢迎登录房屋入侵检测系统！</h1>
+<hr/>
+<div class="zjm">
+    <h2>邮箱登录</h2>
+    <hr width="406" color="white">
+    </br>
+    {%if msg%}
+    <h4 style="text-align: center">{{msg}}}</h4>
+    {%endif%}
+    <form action="/emailLogin" method="POST">
+        <div class="email">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮&nbsp;箱：&nbsp;&nbsp;&nbsp;
+            <input type="text" id="name" class="head" value="{{email}}" placeholder="请输入邮箱" name="email" required/>
+        </div>
+        </br>
+
+        <div class="code">&nbsp;&nbsp;&nbsp;验&nbsp;证&nbsp;码：&nbsp;&nbsp;&nbsp;
+            <input class="keyboard" type="text" id="nm" placeholder="请输入验证码" name="code" required/>
+            <a href="#" onclick="sendEmail()" style="color:white">发送</a>
+        </div>
+        </br>
+
+        <div id="btn">
+            <input type="submit" value="登录" class="submitbtn1">
+        </div>
+
+        <div id="btn2">
+            <a href="/"><input type='button' value='账号登陆' class="btn2"/></a>
+        </div>
+    </form>
+</div>
+</div>
+<script type="text/javascript">
+    function sendEmail()
+    {
+        var emailInfo=document.getElementById('name').value
+        if(emailInfo==null)
+            alert("请填入合法邮箱")
+        else
+            window.location="/emailLogin?email="+emailInfo
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>房屋入侵检测系统</title>
+    <link type="text/css" rel="stylesheet" href="static/plugins/bootstrap-3.4.1/css/bootstrap.css" />
+    <style>
+        .navbar {
+            border-top-left-radius: 0px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            min-height: 70px;
+
+        }
+
+        .navbar-default .navbar-text {
+            color: black;
+            font-size: large;
+            margin-top: 20px;
+            font-family: "楷体", "楷体_GB2312";
+        }
+
+        .nav {
+            padding-left: 0;
+            margin-bottom: 300px;
+            border-radius: 10px;
+        }
+
+        .nav>li>a {
+            position: relative;
+            display: block;
+            padding: 10px 20px;
+        }
+
+        .nav-stacked>li {
+
+            text-align: center;
+        }
+
+        ul,
+        ol {
+            margin-top: 20px;
+        }
+
+        hr {
+            margin-top: 0px;
+            margin-bottom: 10px;
+            border: 0;
+            border-top: 2px solid white;
+        }
+
+
+        .col-xs-10 {
+            position: relative;
+            min-height: 0px;
+            padding-right: 15px;
+            padding-left: 20px;
+
+        }
+
+        a {
+            color: white;
+            text-decoration: auto;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .panel-default>.panel-heading {
+            color: #ffffff;
+            background-color: #286090de;
+            border-color: #f5f5f5;
+            font-size: large;
+            font-weight: bold;
+        }
+
+        .panel-heading {
+            padding: 15px 15px;
+        }
+
+        .panel-body {
+            padding: 0px;
+            color: #284762;
+            background-color: #0a60ac7d;
+            height: 550px;
+        }
+
+
+        .panel-title {
+            text-align: center;
+            font-weight: bold;
+        }
+
+
+        .btn-group>.btn:first-child {
+            margin-left: 30px;
+            margin-bottom: 30px;
+            margin-top: 30px;
+        }
+
+        .input-group {
+            position: relative;
+            display: table;
+            border-collapse: separate;
+            margin: 28px;
+            width: 240px;
+        }
+
+
+        .btn-warning {
+            border-radius: 5px;
+        }
+
+        .btn-danger {
+            border-radius: 5px;
+        }
+
+        .table {
+            color: white;
+            width: 90%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            margin-left: 30px;
+        }
+
+        .list-group {
+            margin: 30px 130px;
+            text-align: center;
+        }
+
+        .change {
+            text-align: center;
+
+        }
+
+        .alert {
+            margin-left: 350px;
+            width: 500px;            
+        }
+    </style>
+
+</head>
+
+<body background="static/image/background.gif">
+    <div class="container-fluid">
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header" style="display:flex">
+                    <a class="navbar-brand" href="#">
+                        <img alt="Brand" src="static/image/pic.gif">
+                    </a>
+                    <p class="navbar-text">{{userName}}，房屋入侵检测系统欢迎您!</p>
+                    <button type="button" id="myButton" data-loading-text="Loading..." class="btn btn-danger" onclick="logOut()">
+                    退出登录
+                </button>
+                </div>
+            </div>
+        </nav>
+        <div class="col-xs-2" style="background-color:#ffffff00">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">后台管理</h3>
+                </div>
+                <div class="panel-body">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li role="presentation" class="userCenter"><a href="/selfInformation">
+                                <span class="glyphicon glyphicon-file" aria-hidden="true"></span>&nbsp;个人信息</a></li>
+                        <hr>
+                        <li role="presentation" class="videoRealTime"><a href="/videoRealTime">
+                                <span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span>&nbsp;实时监测</a>
+                        </li>
+                        <hr>
+
+                    </ul>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col-xs-10">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-file" aria-hidden="true">&nbsp;个人信息</span>
+                </div>
+                <div class="panel-body">
+
+                    <!-- 用户信息展示 -->
+                    <ul class="list-group">
+                        <li class="list-group-item">用户名：&nbsp;{{ userList.userName }}</li>
+                        <li class="list-group-item">姓名：{{ userList.name }}&nbsp;</li>
+                        <li class="list-group-item">等级：{{ userList.level }}&nbsp;</li>
+                    </ul>
+
+                    <!-- 修改密码 -->
+                    <div class="alert alert-success" role="alert">
+                        <form method="post" action="#" class="change">
+                            <h4>修改密码</h4>
+                            {%if msg%}
+                            <h5 style="color:red;display:inline-block">{{msg}}</h5>
+                            {%endif%}
+                            <p>旧密码：<input type="password" name="oldPwd"></p>
+                            <p>新密码：<input type="password" name="pwd"></p>
+                            <p><input type="submit" value="立即修改" class="btn btn-primary"></p>
+                        </form>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+    function logOut()
+    {
+        var msg="确认退出吗" ;
+        if(confirm(msg)==false)
+        {
+            return;
+        }
+        else
+        {
+            window.location="/logOut";
+        }
+
+    }
+</script>
+</body>
+
+</html>
